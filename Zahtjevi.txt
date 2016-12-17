@@ -1,0 +1,32 @@
+Clan: 
+	ime, prezime, ime roditelja, datum rodjenja, kontakt telefona od roditelja i djeteta, rodni list i dvije slike
+
+Oprema: 
+	sorc, trenerka, dres, guma, drvo(velicine za sve navedeno)
+
+Kategorije: 
+	do 10 godina -subkadeti
+	11-12  godina -mladji kadeti 
+	13-14 godina - kadeti
+	15-16-17 godina juniori
+	18 godina seniori
+
+U kalendarskoj godini kada punis godine, do kraja te godine ostajes u toj kategoriji
+
+Skupstina kluba donosi statut kluba: upravni odbor 7 clanova(predsjednik, potpredsjednik, 5 clanova) , nadzorni odbor(predsjednik i 2 clana)-nadzor na finansijama
+Jos ima tehnicki sekretar i dva trenera sa licencom
+Izvori prihoda-sredstva grada, sredstva ministarstva porodice, omladine i sporta u vladi RS, clanarine, sponzori i donatori
+Uplata i islata(stanje na racunu)-vodjenje evidncije(omoguciti da se unosi)
+Plan i program i tacke skupstine kluba(omoguciti da se okaci dokument)
+
+Sistem organiziacije u BiH: 
+premijer liga(2 ekipe ispadaju u prvu ligu), prva liga BiH(2 ekipe ukaze u	Premijer, 2 zadnje ispdaju na teritornijalne), liga RS(1 ekipa u prvu ligu) i liga federacije BiH(jedna ekipa u prvu ligu)
+
+Premijer liga-4 licencirana igraca(3 igraju u toku meca) - BORAC 1
+
+Liga RS-5 licencirana igraca(3 igraju u roku meca) - BORAC 2
+
+U mladjim kategorijama od seniorskih imaju prvenstva ekipna RS i BiH
+A sve kategorije i sa seniorima imaju pojedinacna prvenstva RS i BiH i dublovi
+
+Ko narucuje opremu, kako se to radi, postepeno...kako ide uclanjivanje, ko to radi
