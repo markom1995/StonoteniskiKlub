@@ -30,3 +30,11 @@ U mladjim kategorijama od seniorskih imaju prvenstva ekipna RS i BiH
 A sve kategorije i sa seniorima imaju pojedinacna prvenstva RS i BiH i dublovi
 
 Ko narucuje opremu, kako se to radi, postepeno...kako ide uclanjivanje, ko to radi
+
+Dekompozicija sistema:
+	Rad sa clanovima
+	Rad sa opremom
+	Administrativni poslovi
+	Rad sa finansijama
+	Rad sa statistikom
+	

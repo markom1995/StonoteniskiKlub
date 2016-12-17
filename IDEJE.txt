@@ -1,0 +1,11 @@
+Eksterni ucesnici:
+	Clan
+	Stonoteniski savez
+	Distributer opreme
+Dekompozicija sistema:
+	Rad sa clanovima
+	Rad sa opremom
+	Rad sa finansijama
+	Rad sa statistikom
+	Administrativni poslovi
+Ostalo:
