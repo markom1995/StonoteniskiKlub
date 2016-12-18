@@ -1,11 +1,26 @@
-Eksterni ucesnici:
+Eksterni ucesnici
 	Clan
+	   -od: zahtjevi(DF), clanarine(OF)
+	   -prema: clanska karta(OF), potvrde(DF)
 	Stonoteniski savez
+	   -od: rang tabela igraca(OF)
+           -prema: registracija igraca(DF)
 	Distributer opreme
+	   -od: narucena oprema(OF), faktura(DF), katalog(OF)
+	   -prema: narudzba(OF)
+
 Dekompozicija sistema:
 	Rad sa clanovima
 	Rad sa opremom
 	Rad sa finansijama
 	Rad sa statistikom
+	Organizacija turnira
 	Administrativni poslovi
+
+Skladista:
+	Evidencija o clanovima(rad sa clanovima, rad sa statistikom, rad sa opremom)
+	Budzet kluba(rad sa finansijama)
+	Evidencija o sjednicama kluba(Administartivni poslovi)
 Ostalo:
+Napomena:
+	nisam znao kako da modelujem organizaciju turnira
