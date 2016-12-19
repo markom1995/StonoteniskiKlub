@@ -11,7 +11,9 @@ Eksterni ucesnici
 	Ucesnik turnira
 	   -od: Prijava(DF), Novac(OF)
 	   -prema: Akreditacija, Nagrada, Novac sve (OF)
-	   
+	Sponzor
+	   ZA GAJU: ugovor u administrativne poslove, a donacije u finansije i opremu i srediti dijagram
+	   PITATIIII ALOO MALINAA!!! 
 Dekompozicija sistema:
 	Rad sa clanovima
 	Rad sa opremom
