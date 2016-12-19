@@ -1,14 +1,17 @@
 Eksterni ucesnici
 	Clan
-	   -od: zahtjevi(DF), clanarine(OF)
-	   -prema: clanska karta(OF), potvrde(DF)
+	   -od: zahtjevi(DF), clanarina(OF)
+	   -prema: clanska karta(OF), potvrde(DF), oprema(OF)
 	Stonoteniski savez
-	   -od: rang tabela igraca(OF)
-           -prema: registracija igraca(DF)
+	   -od: izvjestaji(DF), dopisi(DF)
+           -prema: zahtjevi(DF) // Igrac i tim, prethodni rezultati
 	Distributer opreme
 	   -od: narucena oprema(OF), faktura(DF), katalog(OF)
 	   -prema: narudzba(OF)
-
+	Ucesnik turnira
+	   -od: Prijava(DF), Novac(OF)
+	   -prema: Akreditacija, Nagrada, Novac sve (OF)
+	   
 Dekompozicija sistema:
 	Rad sa clanovima
 	Rad sa opremom
