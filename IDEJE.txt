@@ -16,6 +16,7 @@ Eksterni ucesnici
 	   PITATIIII ALOO MALINAA!!! 
 Dekompozicija sistema:
 	Rad sa clanovima
+		->
 	Rad sa opremom
 	Rad sa finansijama
 	Rad sa statistikom
@@ -26,6 +27,10 @@ Skladista:
 	Evidencija o clanovima(rad sa clanovima, rad sa statistikom, rad sa opremom)
 	Budzet kluba(rad sa finansijama)
 	Evidencija o sjednicama kluba(Administartivni poslovi)
+
+Potrvrde:
+	Koje sve potvrde se mogu dobiti u klubu???
+
 Ostalo:
 Napomena:
 	nisam znao kako da modelujem organizaciju turnira
