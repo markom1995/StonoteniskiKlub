@@ -28,8 +28,11 @@ Skladista:
 	Budzet kluba(rad sa finansijama)
 	Evidencija o sjednicama kluba(Administartivni poslovi)
 
-Potrvrde:
-	Koje sve potvrde se mogu dobiti u klubu???
+Potrvrde o:
+	-Uclanjenju
+	-Isclanjenju
+	-Uplati clanarine
+	-Pripadnosti klubu (potvrda da igra za taj klub)
 
 Ostalo:
 Napomena:
