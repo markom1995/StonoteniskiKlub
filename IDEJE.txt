@@ -37,3 +37,5 @@ Potrvrde o:
 Ostalo:
 Napomena:
 	nisam znao kako da modelujem organizaciju turnira
+NAPOMENA HELENA: !!!!!!!!
+	pricali smo i skontali da donacije nisu pravilno usmjerene, postoje dvije opcije, ili da donacije idu u rad sa finansijama, pa da se u radu sa finansijama prerasporedjuje novac ili da donacije (u vidu opreme) idu u rad sa opremom, donacije (za turnire) idu u organizaciju turnira, i donacije novcane idu u rad sa administracijom, pa rad sa administracijom kad donosi odluku o budzetu uzima i to u obzir i salje podatke o budzetu u rad sa finansijama (kako je vec uradjeno). Razmislite, pa javite sta cemo, jer se onda moraju mijenjati administracija, finansije i turniri. Dzoks kaze da se u radu sa finansijama samo evidentira budzet, pa je onda logicna prva opcija. Ja cu finansije odraditi kao da je odlucena prva opcija, a ako se odluci drugacije, javite, pa cu promijeniti. 
