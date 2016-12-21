@@ -1,2 +1,0 @@
-Po meni, trebalo bi izbaciti clanarine i samo zadrzati novac i onda da se to odvoji u radu sa clanovima na
-CLANARINE i NOVAC ZA OPREMU i sa tom pretpostavkom sam radio ovu dekompoziciju, lagano je izmjeniti ako niste za to.

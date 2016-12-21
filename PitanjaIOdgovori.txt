@@ -5,6 +5,11 @@ se novac salje u rad sa turnirom, (to bi trebala biti NOVA strelica na glavnom d
 ona ide direktno u rad sa opremom kao i prije, a NOVA strelica iz sponzora ide u rad sa turnirima sa nazivom rekviziti, jer se prilikom turnira zapravo to i 
 dobija od sponzora a ne oprema kao kod opreme kluba.
 
+ODGOVOR U VEZI RADA SA OPREMOM (MALINA):
+	Rad sa opremom sam razdvojio na dva dijela: rad sa opremom clana i rad sa opremom kluba, vecina stvari je ista,
+	ali ima nesto u cemu se razlikuju pa nisam mogao da to zajedno uradim. Ubacio sam jos dva nova skladista: 
+	evidencija narudzbi i evidencija dobavljenje robe. Pogledajte pa recite da li je dobro.
+
 
 
 
