@@ -33,20 +33,7 @@ Potrvrde o:
 	-Isclanjenju
 	-Uplati clanarine
 	-Pripadnosti klubu (potvrda da igra za taj klub)
-
-Ostalo:
-ODGOVOR MALINI (CILI):
-	- slazem se da se stavi samo novac na prva 2 nivoa, a u radu sa clanovima da se razgranici na clanarinu i novac za opremu
-	- Sto se tice rada sa opremom, pokusaj uvesti nekoliko skladista u koje bi se evidentirale neke stvari, poput dobavljene opreme, tako da se u njih upisuje
-	  a ne da imas skladista iz kojih se samo cita nesto
-	- Kod dekompozicije prijema, uzeti u obzir da i donirana oprema moze biti neispravna, pa uradi isto kao i sa kupljenom
-	- vidi ako ima jos nesto dodatno da ti pada na pamet, ako meni ili nekom drugom padne nesto na pamet, neka upise ovde
-ODGOVOR BRADI (CILI):
-	- cini mi se sve ok
-ODGOVOR HELENI I DZOKSU (CILI):
-	- po mom misljenju, u administrativne poslove idu samo podaci o donacijama koji su sadrzani u ugovorima, a donacije idu u ta tri odsjeka, ali ako ostali misle
-	  drugacije onda cemo uraditi da novcane donacije idu u administrativne poslove, a zatim da se to samo koristi od strane finansija
-Napomena:
-	nisam znao kako da modelujem organizaciju turnira KO?, ako je Gaja obrisi ovaj red.
-NAPOMENA HELENA: !!!!!!!!
-	pricali smo i skontali da donacije nisu pravilno usmjerene, postoje dvije opcije, ili da donacije idu u rad sa finansijama, pa da se u radu sa finansijama prerasporedjuje novac ili da donacije (u vidu opreme) idu u rad sa opremom, donacije (za turnire) idu u organizaciju turnira, i donacije novcane idu u rad sa administracijom, pa rad sa administracijom kad donosi odluku o budzetu uzima i to u obzir i salje podatke o budzetu u rad sa finansijama (kako je vec uradjeno). Razmislite, pa javite sta cemo, jer se onda moraju mijenjati administracija, finansije i turniri. Dzoks kaze da se u radu sa finansijama samo evidentira budzet, pa je onda logicna prva opcija. Ja cu finansije odraditi kao da je odlucena prva opcija, a ako se odluci drugacije, javite, pa cu promijeniti. 
+REDOSLIJED:
+	GAJA
+	MALINA
+	BRADA
