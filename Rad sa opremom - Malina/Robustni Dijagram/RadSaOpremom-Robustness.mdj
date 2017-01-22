@@ -60037,7 +60037,7 @@
 									"model": {
 										"$ref": "AAAAAAFZqD3kjlDa6Ec="
 									},
-									"visible": true,
+									"visible": false,
 									"enabled": true,
 									"lineColor": "#000000",
 									"fillColor": "#ffffd8",
@@ -60460,7 +60460,7 @@
 									"model": {
 										"$ref": "AAAAAAFZqD5EgVFKmBU="
 									},
-									"visible": true,
+									"visible": false,
 									"enabled": true,
 									"lineColor": "#000000",
 									"fillColor": "#ffffd8",
@@ -62070,9 +62070,9 @@
 									"showShadow": true,
 									"containerChangeable": false,
 									"containerExtending": false,
-									"left": 1095,
+									"left": 1094,
 									"top": 527,
-									"width": 7.22998046875,
+									"width": 8,
 									"height": 13,
 									"autoResize": false,
 									"alpha": -0.8278826779515833,
@@ -64160,7 +64160,6 @@
 							"_parent": {
 								"$ref": "AAAAAAFZqBL35UUt5nc="
 							},
-							"name": "sadrzi",
 							"end1": {
 								"_type": "UMLAssociationEnd",
 								"_id": "AAAAAAFZqD3kjlDbtvM=",
@@ -64207,7 +64206,6 @@
 							"_parent": {
 								"$ref": "AAAAAAFZqBL35UUt5nc="
 							},
-							"name": "sadrzi",
 							"end1": {
 								"_type": "UMLAssociationEnd",
 								"_id": "AAAAAAFZqD5EgVFLdvg=",
