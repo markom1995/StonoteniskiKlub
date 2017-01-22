@@ -2201,7 +2201,7 @@
 									"containerExtending": false,
 									"left": 262.5,
 									"top": 111.5,
-									"width": 145.82080078125,
+									"width": 145,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -2937,7 +2937,7 @@
 									"containerExtending": false,
 									"left": 532,
 									"top": 255.5,
-									"width": 134.2744140625,
+									"width": 133,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -4094,7 +4094,7 @@
 									"containerExtending": false,
 									"left": 468,
 									"top": 139.5,
-									"width": 171.83984375,
+									"width": 171,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -4409,7 +4409,7 @@
 									"containerExtending": false,
 									"left": 739.5,
 									"top": 107.5,
-									"width": 171.12890625,
+									"width": 171,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -6167,7 +6167,7 @@
 									"containerExtending": false,
 									"left": 343.5,
 									"top": 651,
-									"width": 150.892578125,
+									"width": 150,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -6482,7 +6482,7 @@
 									"containerExtending": false,
 									"left": 711.5,
 									"top": 635.5,
-									"width": 150.181640625,
+									"width": 149,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -7398,7 +7398,7 @@
 									"containerExtending": false,
 									"left": 613,
 									"top": 380.5,
-									"width": 100.314453125,
+									"width": 99,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -7713,7 +7713,7 @@
 									"containerExtending": false,
 									"left": 362,
 									"top": 476.5,
-									"width": 124.1435546875,
+									"width": 123,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -62362,7 +62362,7 @@
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "EvidentiranjeDistributeraOpremeForm",
+											"text": "AzuriranjeDistributeraOpremeForm",
 											"horizontalAlignment": 2,
 											"verticalAlignment": 5,
 											"wordWrap": false
@@ -62651,7 +62651,7 @@
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "EvidentiranjeDistributeraOpremeControl",
+											"text": "AzuriranjeDistributeraOpremeControl",
 											"horizontalAlignment": 2,
 											"verticalAlignment": 5,
 											"wordWrap": false
@@ -64492,7 +64492,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "EvidentiranjeDistributeraOpremeForm",
+					"name": "AzuriranjeDistributeraOpremeForm",
 					"ownedElements": [
 						{
 							"_type": "UMLDependency",
@@ -64524,7 +64524,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "EvidentiranjeDistributeraOpremeControl",
+					"name": "AzuriranjeDistributeraOpremeControl",
 					"ownedElements": [
 						{
 							"_type": "UMLDependency",
@@ -65413,7 +65413,7 @@
 									"containerExtending": true,
 									"left": 212,
 									"top": 112,
-									"width": 84.68359375,
+									"width": 84,
 									"height": 38,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -72680,7 +72680,7 @@
 									"containerExtending": true,
 									"left": 556,
 									"top": 540,
-									"width": 102.6484375,
+									"width": 102,
 									"height": 36,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -73169,7 +73169,7 @@
 									"containerExtending": true,
 									"left": 720,
 									"top": 592,
-									"width": 98.67578125,
+									"width": 98,
 									"height": 36,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -75216,7 +75216,7 @@
 									"containerExtending": true,
 									"left": 236,
 									"top": 644,
-									"width": 79.380859375,
+									"width": 70,
 									"height": 36,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -75505,7 +75505,7 @@
 									"containerExtending": true,
 									"left": 236,
 									"top": 708,
-									"width": 79.380859375,
+									"width": 70,
 									"height": 36,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -75794,7 +75794,7 @@
 									"containerExtending": true,
 									"left": 236,
 									"top": 764,
-									"width": 79.380859375,
+									"width": 70,
 									"height": 36,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -76083,7 +76083,7 @@
 									"containerExtending": true,
 									"left": 236,
 									"top": 820,
-									"width": 92.013671875,
+									"width": 87,
 									"height": 36,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -76372,7 +76372,7 @@
 									"containerExtending": true,
 									"left": 236,
 									"top": 876,
-									"width": 79.380859375,
+									"width": 70,
 									"height": 36,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -77695,7 +77695,7 @@
 									"containerExtending": true,
 									"left": 740,
 									"top": 24,
-									"width": 79.380859375,
+									"width": 70,
 									"height": 36,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -77762,7 +77762,7 @@
 									"containerExtending": true,
 									"left": 740,
 									"top": 60,
-									"width": 120.396484375,
+									"width": 115,
 									"height": 22,
 									"autoResize": false
 								},
@@ -78015,7 +78015,7 @@
 									"containerExtending": true,
 									"left": 740,
 									"top": 96,
-									"width": 79.380859375,
+									"width": 70,
 									"height": 36,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -78304,7 +78304,7 @@
 									"containerExtending": true,
 									"left": 740,
 									"top": 148,
-									"width": 79.380859375,
+									"width": 70,
 									"height": 36,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -79487,7 +79487,7 @@
 									"containerExtending": true,
 									"left": 724,
 									"top": 888,
-									"width": 85.345703125,
+									"width": 85,
 									"height": 36,
 									"autoResize": false,
 									"stereotypeLabel": {
