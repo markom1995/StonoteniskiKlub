@@ -1,5 +1,5 @@
-Grupa za Inženjering softverskih zahtjeva i Projektovanje softvera
-Projektni zadatak: Stonoteniski Klub
+Grupa za Inženjering softverskih zahtjeva i Projektovanje softvera 
+Projektni zadatak: Stonoteniski Klub 
 Članovi:
 - Dragan Ilić
 - Marko Malinović
