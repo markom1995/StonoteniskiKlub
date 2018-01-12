@@ -748,7 +748,7 @@ CREATE TABLE `potvrda_tip` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Tip` varchar(45) NOT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -757,6 +757,7 @@ CREATE TABLE `potvrda_tip` (
 
 LOCK TABLES `potvrda_tip` WRITE;
 /*!40000 ALTER TABLE `potvrda_tip` DISABLE KEYS */;
+INSERT INTO `potvrda_tip` VALUES (1,'Učlanjivanje'),(2,'Isčlanjivanje'),(3,'Aktivan član'),(4,'Pravdanje'),(5,'Default');
 /*!40000 ALTER TABLE `potvrda_tip` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2531,4 +2532,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-01-12 16:17:32
+-- Dump completed on 2018-01-12 16:25:37
