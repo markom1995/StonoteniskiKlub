@@ -1145,7 +1145,7 @@ CREATE TABLE `tip_transakcije` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Tip` varchar(45) NOT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1154,7 +1154,7 @@ CREATE TABLE `tip_transakcije` (
 
 LOCK TABLES `tip_transakcije` WRITE;
 /*!40000 ALTER TABLE `tip_transakcije` DISABLE KEYS */;
-INSERT INTO `tip_transakcije` VALUES (1,'Clanarina');
+INSERT INTO `tip_transakcije` VALUES (1,'Clanarina'),(2,'clanarina'),(3,'plata'),(4,'sredstva za opremu'),(5,'uplata za turnir'),(6,'sredstva za turnir'),(7,'donacija');
 /*!40000 ALTER TABLE `tip_transakcije` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1205,7 +1205,7 @@ CREATE TABLE `trening` (
   PRIMARY KEY (`Id`),
   KEY `fk_TRENING_CLAN1_idx` (`CLAN_Id`),
   CONSTRAINT `fk_TRENING_CLAN1` FOREIGN KEY (`CLAN_Id`) REFERENCES `clan` (`OSOBA_Id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1214,7 +1214,7 @@ CREATE TABLE `trening` (
 
 LOCK TABLES `trening` WRITE;
 /*!40000 ALTER TABLE `trening` DISABLE KEYS */;
-INSERT INTO `trening` VALUES (1,'2017-12-21','Trening je bio dobar, ali ja sam još bolji',23,1),(2,'2017-12-22','Test današnji datum\nok',23,1),(3,'2017-11-29','Helena trening',5,1),(4,'2016-10-11','2016',23,1),(5,'2017-10-12','2017',23,0),(6,'2017-12-08','Proba 1',23,1),(7,'2017-12-28','forhendi?i?',23,1);
+INSERT INTO `trening` VALUES (1,'2017-12-21','Trening je bio dobar, ali ja sam još bolji',23,1),(2,'2017-12-22','Test današnji datum\nok',23,1),(3,'2017-11-29','Helena trening',5,1),(4,'2016-10-11','2016',23,0),(5,'2017-10-12','2017',23,0),(6,'2017-12-08','Proba 1',23,1),(7,'2017-12-28','forhendi?i?',23,1),(8,'2018-01-23','Bla blafsdfdsSĆ',23,1);
 /*!40000 ALTER TABLE `trening` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1556,14 +1556,14 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `dodaj_budzet`(in inSezona varchar(54), in inIznos decimal)
 begin
 	declare broj int default 0;
-    select count(*) from NOVCANA_SREDSTVA n where n.Sezona=inSezona into broj;
+    select count(*) from NOVCANA_SREDSTVA n where n.Sezona=inSezona and n.Obrisan=false into broj;
     if broj>0 then signal sqlstate '45000' set message_text='Postoji evidentirani iznos budzeta za izabranu sezonu.'; end if;
-    insert into NOVCANA_SREDSTVA values (null, inSezona, inIznos, 0, 0);
+    insert into NOVCANA_SREDSTVA values (null, inSezona, inIznos, 0, 0,false);
 end ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1578,15 +1578,17 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `dodaj_clanarinu`( in inDatum date, in inIznos decimal(8,2), inOpis varchar(100), 
 															in inMjesec int(11), in inGodina year(4), 
                                                             in inClanId int(11),out outId int(11))
 begin
-	
-	insert into TRANSAKCIJA values (null, inDatum, inIznos, inOpis, 1, 1);
-    insert into CLANARINA values (inMjesec, inGodina, (select max(Id) from TRANSAKCIJA), inClanId);
+	declare broj int default 0;
+	select count(*) from CLANARINA c inner join TRANSAKCIJA t where c.TRANSAKCIJA_Id=t.id and c.Mjesec=inMjesec and c.Godina=inGodina and c.CLAN_OSOBA_Id=inClanId and t.Obrisan=false into broj;
+	if broj>0 then signal sqlstate '45000' set message_text='Postoji takva clanarina.'; end if;
+	insert into transakcija values (null, inDatum, inIznos, inOpis, 1, 1,false);
+    insert into clanarina values (inMjesec, inGodina, (select max(Id) from transakcija), inClanId);
     select max(Id) into outId from TRANSAKCIJA;
 end ;;
 DELIMITER ;
@@ -1644,7 +1646,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `dodaj_donaciju`(in pSponzorId int,
 								in pRedniBrojUgovor int,
@@ -1653,13 +1655,13 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `dodaj_donaciju`(in pSponzorId int,
                                 in pNovcaniIznos decimal(8,2),
                                 in pNovcanaDonacija boolean,
                                 in pOpremaTipId int,
-                                out pUspjesno boolean)
+                                out pRedniBroj int)
 begin
 	declare rb int default 1;
 	if( ((pKolicina is not null) and (pOpremaTipId=false or pNovcanaDonacija=true or pKolicina<0)) or
 		((pNovcaniIznos is not null) and (pOpremaTipId=true or pNovcanaDonacija=false or pNovcaniIznos<0))) then
 	begin
-		set pUspjesno = false;
+		set pRedniBroj = -1;
         signal sqlstate 'ERROR';
     end;
     else
@@ -1672,7 +1674,7 @@ begin
 			end if;
             insert into DONACIJA values(rb, pOpis, pKolicina, pNovcaniIznos, pNovcanaDonacija,
 										false, pSponzorId, pRedniBrojUgovor, pOpremaTipId, null);
-			set pUspjesno=true;
+			set pRedniBroj=rb;
         end;
     end if;
 end ;;
@@ -1757,11 +1759,11 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `dodaj_platu`( in inDatum date, in inIznos decimal(8,2), in inOpis varchar(100), in inZaposleniId int(11), out outId int(11))
 begin
-	insert into TRANSAKCIJA values (null, inDatum, inIznos, inOpis, 0, 2);
+	insert into TRANSAKCIJA values (null, inDatum, inIznos, inOpis, 0, 2,false);
     insert into PLATA values ((select max(Id) from transakcija), inZaposleniId);
     select max(Id) into outId from TRANSAKCIJA;
 end ;;
@@ -1804,6 +1806,43 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `dodaj_sponzora` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `dodaj_sponzora`(in pNaziv varchar(45),
+								in pAdresa varchar(45),
+                                in pMail varchar(45),
+                                in pDatumOd date,
+                                in pDatumDo date,
+                                in pOpis varchar(100),
+                                out pId int,
+                                out pRedniBroj int)
+begin
+	declare exit handler for sqlexception
+    begin
+		set pId = -1;
+        set pRedniBroj = -1;
+        rollback;
+        resignal;
+    end;
+    start transaction;
+		insert into SPONZOR values(null, pNaziv, pAdresa, pMail);
+		call dodaj_sponzorski_ugovor(pDatumOd, pDatumDo, (select max(Id) from SPONZOR), pOpis, pRedniBroj);
+        select max(Id) from SPONZOR into pid;
+	commit;
+end ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `dodaj_sponzorski_ugovor` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -1812,18 +1851,18 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `dodaj_sponzorski_ugovor`(in pDatumOd date,
                                          in pDatumDo date,
                                          in pSponzorId int,
                                          in pOpis varchar(100),
-                                         out pUspjesno boolean)
+                                         out pId int)
 begin
 	declare rb int default 1;
 	if ((pDatumDo is not null) and (datediff(pDatumOd, pDatumDo) > 0)) then
 	begin
-        set pUspjesno = false;
+		set pId = -1;
         signal sqlstate 'ERROR';
 	end;
 	else
@@ -1835,7 +1874,7 @@ begin
 				set rb = rb + 1;
 			end if;
             insert into UGOVOR_SPONZOR values(rb, pDatumOd, pDatumDo, pSponzorId, pOpis);
-            set pUspjesno = true;
+            set pId = rb;
 		end;
 	end if;
 end ;;
@@ -1852,15 +1891,17 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `dodaj_troskovi_oprema`( in inDatum date, in inIznos decimal(8,2), inOpis varchar(100), 
 															
                                                             in inNarudzbaId int(11), out outId int(11))
 begin
-	
-	insert into TRANSAKCIJA values (null, inDatum, inIznos, inOpis, 1, 3);
-    insert into TROSKOVI_OPREMA values ((select max(Id) from TRANSAKCIJA), inNarudzbaId);
+	declare broj int default 0;
+	select count(*) from TROSKOVI_OPREMA c inner join TRANSAKCIJA t inner join NARUDZBA n where c.TRANSAKCIJA_Id=t.Id and c.NARUDZBA_Id=inNarudzbaId and n.Id=inNarudzbaId and n.OpremaKluba=true and t.Obrisan=false into broj;
+	if broj>0 then signal sqlstate '45000' set message_text='Postoji unos za troskove opreme vezan za odabranu narudzbu.'; end if;
+	insert into TRANSAKCIJA values (null, inDatum, inIznos, inOpis, 1, 3, false);
+    insert into TROSKOVI_OPREMA values ((select max(Id) from transakcija), inNarudzbaId);
     select max(Id) into outId from TRANSAKCIJA;
 end ;;
 DELIMITER ;
@@ -1876,7 +1917,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `dodaj_troskovi_turnir`( in inDatum date, in inIznos decimal(8,2), inOpis varchar(100), 
 															
@@ -1885,6 +1926,30 @@ begin
 	
 	insert into TRANSAKCIJA values (null, inDatum, inIznos, inOpis, 1, 3,FALSE);
     insert into TROSKOVI_TURNIR values ((select max(Id) from transakcija), inTurnirId);
+    select max(Id) into outId from TRANSAKCIJA;
+end ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `dodaj_uplatu_turnir` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `dodaj_uplatu_turnir`( in inPrijavaId int,  in inDatum date, in inIznos decimal(8,2),in inOpis varchar(100), out outId int(11))
+begin
+	declare broj int default 0;
+	select count(*) from UCESCE_NA_TURNIRU c inner join TRANSAKCIJA t where c.TRANSAKCIJA_Id=t.Id and c.UCESNIK_PRIJAVA_Id=inPrijavaId and t.Obrisan=false into broj;
+	if broj>0 then signal sqlstate '45000' set message_text='Postoji evidentirana uplata za turnir odabranog ucesnika.'; end if;
+	insert into TRANSAKCIJA values (null, inDatum, inIznos, inOpis, 1, 4,false);
+    insert into UCESCE_NA_TURNIRU values ((select max(Id) from TRANSAKCIJA), inPrijavaId);
     select max(Id) into outId from TRANSAKCIJA;
 end ;;
 DELIMITER ;
@@ -2252,13 +2317,13 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `update_clanarinu`( in inOsobaId int, in inId int, in inDatum date, in inIznos decimal(8,2), inOpis varchar(100), 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_clanarinu`( in inId int, in inDatum date, in inIznos decimal(8,2), inOpis varchar(100), 
 															in inMjesec int(11), in inGodina year(4))
 begin
-	update TRANSAKCIJA SET Datum=inDatum, Iznos=inIznos, Opis=inOpis where Id=inId;
-	update CLANARINA SET Mjesec=inMjesec, Godina=inGodina, CLAN_OSOBA_Id=inOsobaId where TRANSAKCIJA_Id=inId;
+	update TRANSAKCIJA SET datum=inDatum, iznos=inIznos, opis=inOpis where Id=inId;
+    update CLANARINA SET Mjesec=inMjesec, Godina=inGodina where TRANSAKCIJA_Id=inId;
 end ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -2273,12 +2338,12 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `update_platu`(in inOsobaId int, in inId int, in inDatum date, in inIznos decimal(8,2), in inOpis varchar(100))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_platu`( in inId int, in inDatum date, in inIznos decimal(8,2), in inOpis varchar(100))
 begin
 	update TRANSAKCIJA SET Datum=inDatum, Iznos=inIznos, Opis=inOpis where Id=inId;
-	update PLATA SET ZAPOSLENI_OSOBA_Id=inOsobaId where TRANSAKCIJA_Id=inId;
+	#update PLATA SET ZAPOSLENI_OSOBA_Id=inOsobaId where TRANSAKCIJA_Id=inId;
 end ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -2293,7 +2358,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `update_troskovi_oprema`( in inNarudzbaId int, in inId int, in inDatum date, in inIznos decimal(8,2), inOpis varchar(100))
 begin
@@ -2313,12 +2378,30 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `update_troskovi_turnir`( in inTurnirId int, in inId int, in inDatum date, in inIznos decimal(8,2), inOpis varchar(100))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_troskovi_turnir`(  in inId int, in inDatum date, in inIznos decimal(8,2), inOpis varchar(100))
 begin
 	update TRANSAKCIJA SET datum=inDatum, iznos=inIznos, opis=inOpis where Id=inId;
-	update TROSKOVI_TURNIR SET TURNIR_Id=inTurnirId where TRANSAKCIJA_Id=inId;
+end ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `update_uplatu_turnir` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_uplatu_turnir`( in inId int, in inDatum date, in inIznos decimal(8,2), inOpis varchar(100))
+begin
+	update TRANSAKCIJA SET datum=inDatum, iznos=inIznos, opis=inOpis where Id=inId;
 end ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -2394,7 +2477,7 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `prikaz_clanarina` AS select `t`.`Id` AS `id`,`o`.`Ime` AS `ime`,`o`.`Prezime` AS `prezime`,`cl`.`Mjesec` AS `mjesec`,`cl`.`Godina` AS `godina`,`t`.`Datum` AS `datum`,`t`.`Iznos` AS `iznos`,`t`.`Opis` AS `opis`,`tt`.`Tip` AS `Tip`,`c`.`OSOBA_Id` AS `OSOBA_Id` from ((((`osoba` `o` join `clan` `c`) join `transakcija` `t`) join `clanarina` `cl`) join `tip_transakcije` `tt` on(((`tt`.`Id` = `t`.`TIP_TRANSAKCIJE_Id`) and (`o`.`Id` = `c`.`OSOBA_Id`) and (`t`.`Id` = `cl`.`TRANSAKCIJA_Id`) and (`cl`.`CLAN_OSOBA_Id` = `c`.`OSOBA_Id`)))) */;
+/*!50001 VIEW `prikaz_clanarina` AS select `t`.`Id` AS `id`,`o`.`Ime` AS `ime`,`o`.`Prezime` AS `prezime`,`cl`.`Mjesec` AS `mjesec`,`cl`.`Godina` AS `godina`,`t`.`Datum` AS `datum`,`t`.`Iznos` AS `iznos`,`t`.`Opis` AS `opis`,`tt`.`Tip` AS `Tip`,`c`.`OSOBA_Id` AS `OSOBA_Id` from ((((`osoba` `o` join `clan` `c`) join `transakcija` `t`) join `clanarina` `cl`) join `tip_transakcije` `tt` on(((`tt`.`Id` = `t`.`TIP_TRANSAKCIJE_Id`) and (`o`.`Id` = `c`.`OSOBA_Id`) and (`t`.`Id` = `cl`.`TRANSAKCIJA_Id`) and (`cl`.`CLAN_OSOBA_Id` = `c`.`OSOBA_Id`)))) where (`t`.`Obrisan` = FALSE) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -2450,7 +2533,7 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `prikaz_plata` AS select `z`.`OSOBA_Id` AS `OSOBA_Id`,`o`.`Ime` AS `Ime`,`o`.`Prezime` AS `Prezime`,`o`.`ImeRoditelja` AS `ImeRoditelja`,`o`.`JMB` AS `JMB`,`o`.`Pol` AS `Pol`,`o`.`DatumRodjenja` AS `DatumRodjenja`,`o`.`Fotografija` AS `Fotografija`,`z`.`Aktivan` AS `Aktivan`,`t`.`Iznos` AS `Iznos`,`t`.`Datum` AS `Datum`,`t`.`Opis` AS `Opis`,`t`.`Id` AS `Id`,`tt`.`Tip` AS `Tip` from ((((`osoba` `o` join `zaposleni` `z`) join `transakcija` `t`) join `plata` `p`) join `tip_transakcije` `tt` on(((`tt`.`Id` = `t`.`TIP_TRANSAKCIJE_Id`) and (`o`.`Id` = `z`.`OSOBA_Id`) and (`t`.`Id` = `p`.`TRANSAKCIJA_Id`) and (`p`.`ZAPOSLENI_OSOBA_Id` = `z`.`OSOBA_Id`)))) */;
+/*!50001 VIEW `prikaz_plata` AS select `z`.`OSOBA_Id` AS `OSOBA_Id`,`o`.`Ime` AS `Ime`,`o`.`Prezime` AS `Prezime`,`o`.`ImeRoditelja` AS `ImeRoditelja`,`o`.`JMB` AS `JMB`,`o`.`Pol` AS `Pol`,`o`.`DatumRodjenja` AS `DatumRodjenja`,`o`.`Fotografija` AS `Fotografija`,`z`.`Aktivan` AS `Aktivan`,`t`.`Iznos` AS `Iznos`,`t`.`Datum` AS `Datum`,`t`.`Opis` AS `Opis`,`t`.`Id` AS `Id`,`tt`.`Tip` AS `Tip` from ((((`osoba` `o` join `zaposleni` `z`) join `transakcija` `t`) join `plata` `p`) join `tip_transakcije` `tt` on(((`tt`.`Id` = `t`.`TIP_TRANSAKCIJE_Id`) and (`o`.`Id` = `z`.`OSOBA_Id`) and (`t`.`Id` = `p`.`TRANSAKCIJA_Id`) and (`p`.`ZAPOSLENI_OSOBA_Id` = `z`.`OSOBA_Id`)))) where (`t`.`Obrisan` = FALSE) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -2468,7 +2551,7 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `prikaz_transakcija` AS select `t`.`Id` AS `Id`,`t`.`Datum` AS `Datum`,`t`.`Iznos` AS `Iznos`,`t`.`Opis` AS `Opis`,`t`.`jeUplata` AS `jeUplata`,`tip`.`Tip` AS `Tip` from (`transakcija` `t` join `tip_transakcije` `tip` on((`t`.`TIP_TRANSAKCIJE_Id` = `tip`.`Id`))) where (`tip`.`Id` > 4) */;
+/*!50001 VIEW `prikaz_transakcija` AS select `t`.`Id` AS `Id`,`t`.`Datum` AS `Datum`,`t`.`Iznos` AS `Iznos`,`t`.`Opis` AS `Opis`,`t`.`jeUplata` AS `jeUplata`,`tip`.`Tip` AS `Tip` from (`transakcija` `t` join `tip_transakcije` `tip` on((`t`.`TIP_TRANSAKCIJE_Id` = `tip`.`Id`))) where ((`tip`.`Id` > 4) and (`t`.`Obrisan` = FALSE)) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -2486,7 +2569,7 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `prikaz_troskovi_oprema` AS select `n`.`Id` AS `Id`,`n`.`DISTRIBUTER_OPREME_Id` AS `DISTRIBUTER_OPREME_Id`,`tt`.`TRANSAKCIJA_Id` AS `TRANSAKCIJA_Id`,`t`.`Datum` AS `Datum`,`t`.`Iznos` AS `Iznos`,`t`.`Opis` AS `Opis`,`tip`.`Tip` AS `Tip`,`n`.`Datum` AS `nDatum` from (((`transakcija` `t` join `tip_transakcije` `tip`) join `narudzba` `n`) join `troskovi_oprema` `tt` on(((`t`.`Id` = `tt`.`TRANSAKCIJA_Id`) and (`tt`.`NARUDZBA_Id` = `n`.`Id`) and (`t`.`TIP_TRANSAKCIJE_Id` = `tip`.`Id`)))) where ((`n`.`Obrisan` = FALSE) and (`n`.`OpremaKluba` = TRUE)) */;
+/*!50001 VIEW `prikaz_troskovi_oprema` AS select `n`.`Id` AS `Id`,`n`.`DISTRIBUTER_OPREME_Id` AS `DISTRIBUTER_OPREME_Id`,`tt`.`TRANSAKCIJA_Id` AS `TRANSAKCIJA_Id`,`t`.`Datum` AS `Datum`,`t`.`Iznos` AS `Iznos`,`t`.`Opis` AS `Opis`,`tip`.`Tip` AS `Tip`,`n`.`Datum` AS `nDatum` from (((`transakcija` `t` join `tip_transakcije` `tip`) join `narudzba` `n`) join `troskovi_oprema` `tt` on(((`t`.`Id` = `tt`.`TRANSAKCIJA_Id`) and (`tt`.`NARUDZBA_Id` = `n`.`Id`) and (`t`.`TIP_TRANSAKCIJE_Id` = `tip`.`Id`)))) where ((`n`.`Obrisan` = FALSE) and (`n`.`OpremaKluba` = TRUE) and (`t`.`Obrisan` = FALSE)) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -2504,7 +2587,7 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `prikaz_troskovi_turnir` AS select `turnir`.`Id` AS `turnirId`,`turnir`.`Naziv` AS `Naziv`,`turnir`.`Datum` AS `turnirDatum`,`t`.`Id` AS `Id`,`t`.`Datum` AS `Datum`,`t`.`Iznos` AS `Iznos`,`t`.`Opis` AS `Opis`,`tip`.`Tip` AS `Tip` from (((`transakcija` `t` join `tip_transakcije` `tip`) join `turnir`) join `troskovi_turnir` `tt` on(((`t`.`Id` = `tt`.`TRANSAKCIJA_Id`) and (`tt`.`TURNIR_Id` = `turnir`.`Id`) and (`t`.`TIP_TRANSAKCIJE_Id` = `tip`.`Id`)))) */;
+/*!50001 VIEW `prikaz_troskovi_turnir` AS select `turnir`.`Id` AS `turnirId`,`turnir`.`Naziv` AS `Naziv`,`turnir`.`Datum` AS `turnirDatum`,`t`.`Id` AS `Id`,`t`.`Datum` AS `Datum`,`t`.`Iznos` AS `Iznos`,`t`.`Opis` AS `Opis`,`tip`.`Tip` AS `Tip` from (((`transakcija` `t` join `tip_transakcije` `tip`) join `turnir`) join `troskovi_turnir` `tt` on(((`t`.`Id` = `tt`.`TRANSAKCIJA_Id`) and (`tt`.`TURNIR_Id` = `turnir`.`Id`) and (`t`.`TIP_TRANSAKCIJE_Id` = `tip`.`Id`)))) where (`t`.`Obrisan` = FALSE) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -2522,7 +2605,7 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `prikaz_uplata_turnir` AS select `o`.`Ime` AS `Ime`,`o`.`Prezime` AS `Prezime`,`o`.`Id` AS `osobaId`,`t`.`Iznos` AS `iznos`,`t`.`Datum` AS `datum`,`t`.`Opis` AS `opis`,`tip`.`Tip` AS `Tip`,`u`.`Id` AS `prijavaId`,`t`.`Id` AS `transakcijaId`,`u`.`TURNIR_Id` AS `TURNIR_Id` from ((((`osoba` `o` join `ucesnik_prijava` `u`) join `transakcija` `t`) join `tip_transakcije` `tip`) join `ucesce_na_turniru` `uc` on(((`o`.`Id` = `u`.`OSOBA_Id`) and (`u`.`Id` = `uc`.`UCESNIK_PRIJAVA_Id`) and (`t`.`Id` = `uc`.`TRANSAKCIJA_Id`) and (`t`.`TIP_TRANSAKCIJE_Id` = `tip`.`Id`)))) */;
+/*!50001 VIEW `prikaz_uplata_turnir` AS select `o`.`Ime` AS `Ime`,`o`.`Prezime` AS `Prezime`,`o`.`Id` AS `osobaId`,`t`.`Iznos` AS `iznos`,`t`.`Datum` AS `datum`,`t`.`Opis` AS `opis`,`tip`.`Tip` AS `Tip`,`u`.`Id` AS `prijavaId`,`t`.`Id` AS `transakcijaId`,`u`.`TURNIR_Id` AS `TURNIR_Id` from ((((`osoba` `o` join `ucesnik_prijava` `u`) join `transakcija` `t`) join `tip_transakcije` `tip`) join `ucesce_na_turniru` `uc` on(((`o`.`Id` = `u`.`OSOBA_Id`) and (`u`.`Id` = `uc`.`UCESNIK_PRIJAVA_Id`) and (`t`.`Id` = `uc`.`TRANSAKCIJA_Id`) and (`t`.`TIP_TRANSAKCIJE_Id` = `tip`.`Id`)))) where (`t`.`Obrisan` = FALSE) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -2536,4 +2619,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-01-23 21:45:49
+-- Dump completed on 2018-01-25 21:46:57
